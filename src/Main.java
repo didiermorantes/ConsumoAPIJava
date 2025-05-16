@@ -1,0 +1,39 @@
+import java.io.UncheckedIOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+import com.prueba.model.BibliotecaGson;
+import com.prueba.model.Titulo;
+import com.prueba.model.TituloGson;
+import com.prueba.model.Json;
+
+//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
+// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+public class Main {
+    public static void main(String[] args) {
+        SolicitudAsincrona objetoSolicitud = new SolicitudAsincrona();
+        System.out.println("La URL es: "+objetoSolicitud.mostrarURL());
+        objetoSolicitud.consumirEndpointRequest();
+        System.out.println("La respuesta tipo request es: " +objetoSolicitud.getRespuestaAPIRequest());
+        objetoSolicitud.consumirEndpointResponse();
+        System.out.println("La respuesta tipo response es:"+objetoSolicitud.getRespuestaAPIResponse());
+        // construimos un objeto para procesar el JSON y obtener arreglos con las claves y valores
+        Json objetoJson = new Json();
+        objetoJson.procesarJson(objetoSolicitud.getRespuestaAPIResponse());
+        // construimos un objeto para asignar los arreglos con clave y valor a las variables del objeto
+        Titulo objetoTitulo = new Titulo();
+        objetoTitulo.extraerInformacionArreglos(objetoJson.getClaves(), objetoJson.getValores());
+        objetoTitulo.listarInformacionAlmacenada();
+
+        // procesamos el Json con la biblioteca Gson y probar sus capacidades
+        BibliotecaGson objetoGson = new BibliotecaGson();
+
+        TituloGson objetoTituloGson = objetoGson.procesarJson(objetoSolicitud.getRespuestaAPIResponse());
+        objetoTituloGson.listarInformacionAlmacenada();
+
+
+
+    }
+}
