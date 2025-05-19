@@ -51,8 +51,20 @@ public class SolicitudAsincrona {
 
     public void asignarPelicula(){
         Scanner atrapar = new Scanner(System.in);
+        String nombrePelicula = "";
+        String nuevoNombrePelicula = "";
         System.out.println("Digite nombre de la pelicula");
-        setPelicula(atrapar.nextLine());
+        nombrePelicula = atrapar.nextLine();
+        nuevoNombrePelicula = this.transformarEspacios(nombrePelicula);
+        setPelicula(nuevoNombrePelicula);
+    }
+
+    public String transformarEspacios(String urlConEspacios){
+        String urlTransformada = "";
+        urlTransformada = urlConEspacios.replace(" ", "%20");
+        System.out.println("Url Solicitada: "+urlConEspacios);
+        System.out.println("Url Transformada: "+urlTransformada);
+        return urlTransformada;
     }
 
     public void consumirEndpointRequest(){
