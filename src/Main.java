@@ -27,7 +27,9 @@ public class Main {
 
 
         if(jsonProcesado){ // si el json se proceso creamos el objeto titulo con los datos procesados del json
-            objetoJson.verParClaveValores(); // observamos la informacion almacenada en el objetoJson
+            // observamos los par clave valor si procesarJson retorna true
+            // objetoJson.verParClaveValores(); // observamos la informacion almacenada en el objetoJson
+
             // construimos un objeto para asignar los arreglos con clave y valor a las variables del objeto
             Titulo objetoTitulo = new Titulo();
 
@@ -39,12 +41,13 @@ public class Main {
             objetoTitulo.extraerInformacionArreglos(objetoJson.getClaves(), objetoJson.getValores());
             objetoTitulo.listarInformacionAlmacenada();
 
-            // procesamos el Json con la biblioteca Gson y probar sus capacidades
-            BibliotecaGson objetoGson = new BibliotecaGson();
-
-            TituloGson objetoTituloGson = objetoGson.procesarJson(objetoSolicitud.getRespuestaAPIResponse());
-            objetoTituloGson.listarInformacionAlmacenada();
         }
+
+        // procesamos el Json con la biblioteca Gson y probar sus capacidades
+        BibliotecaGson objetoGson = new BibliotecaGson();
+
+        TituloGson objetoTituloGson = objetoGson.procesarJson(objetoSolicitud.getRespuestaAPIResponse());
+        objetoTituloGson.listarInformacionAlmacenada();
 
 
 

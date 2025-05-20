@@ -142,10 +142,10 @@ public class Json {
                             if(flagEsValor == false && flagEsKeyValueCorrecto== true){
                                 // no es un valor lo que se quiere almacenar
                                 // System.out.println("Debugging=> Clase Json - Entro por clavellena==false y propiedadLimpia diferente de null, y no hay elementos adicionales y flagEsKeyValueCorrecto en true. claveLlena= "+claveLlena+" , propiedadLimpia: "+propiedadLimpia+ ", flagElementosAdicionales: "+flagElementosAdicionales+ " , flagEsKeyValueCorrecto: "+flagEsKeyValueCorrecto);
-                                System.out.println("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC");
-                                System.out.println("Debugging=> Clase Json - ALMACENAMIENTO CLAVES =>flagEsValor en falso. Se almacenan CLAVES . propiedad "+propiedadLimpia);
-                                System.out.println("Debugging=> Clase Json - Indice Correcto: "+indiceCorrecto);
-                                System.out.println("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC");
+                                // System.out.println("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC");
+                               // System.out.println("Debugging=> Clase Json - ALMACENAMIENTO CLAVES =>flagEsValor en falso. Se almacenan CLAVES . propiedad "+propiedadLimpia);
+                                //System.out.println("Debugging=> Clase Json - Indice Correcto: "+indiceCorrecto);
+                                //System.out.println("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC");
                                 arregloClaves[indiceCorrecto] = propiedadLimpia;
                                 //actualizamos el valor de claveLlena a true para que no ingrese por esta rama del if
                                 claveLlena = true;
@@ -158,10 +158,10 @@ public class Json {
                                 // flagEsKeyValueCorrecto cuando los valores traen muchos dos puntos y comas
                                 // System.out.println("Debugging=> Clase Json - ============CAMINO flagEsValor indeterminado y flagEsKeyValueCorrecto en falso =======================");
                                 // System.out.println("Debugging=> Clase Json - Entro por clavellena==false y propiedadLimpia diferente de null, y no hay elementos adicionales y flagEsKeyValueCorrecto en false. claveLlena= "+claveLlena+" , propiedadLimpia: "+propiedadLimpia+ ", flagElementosAdicionales: "+flagElementosAdicionales+ " , flagEsKeyValueCorrecto: "+flagEsKeyValueCorrecto);
-                                System.out.println("VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV");
-                                System.out.println("Debugging=> Clase Json - Debugging=> Clase Json - ALMACENAMIENTO VALORES =>flagEsValor en indeterminado. Se almacenan VALORES. propiedad: "+propiedadLimpia);
-                                System.out.println("Debugging=> Clase Json - Indice Correcto: "+indiceCorrecto);
-                                System.out.println("VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV");
+                                //System.out.println("VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV");
+                                //System.out.println("Debugging=> Clase Json - Debugging=> Clase Json - ALMACENAMIENTO VALORES =>flagEsValor en indeterminado. Se almacenan VALORES. propiedad: "+propiedadLimpia);
+                                //System.out.println("Debugging=> Clase Json - Indice Correcto: "+indiceCorrecto);
+                                //System.out.println("VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV");
                                 arregloValores[indiceCorrecto] = propiedadLimpia;
 
                                 //limpiamos la sincronia de indices para un nuevo valor
@@ -178,10 +178,10 @@ public class Json {
                                 else{ // viene claves, no incrementamos el indice correcto
                                     // System.out.println("Debugging=> Clase Json -  ============CAMINO flagEsValor false y flagEsKeyValueCorrecto en falso =======================");
                                     // System.out.println("Debugging=> Clase Json - Entro por clavellena==false y propiedadLimpia diferente de null, y no hay elementos adicionales y flagEsKeyValueCorrecto en false. claveLlena= "+claveLlena+" , propiedadLimpia: "+propiedadLimpia+ ", flagElementosAdicionales: "+flagElementosAdicionales+ " , flagEsKeyValueCorrecto: "+flagEsKeyValueCorrecto);
-                                    System.out.println("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC");
-                                    System.out.println("Debugging=> Clase Json - ALMACENAMIENTO CLAVES =>flagEsValor en falso. Se almacenan CLAVES. propiedad: "+propiedadLimpia);
-                                    System.out.println("Debugging=> Clase Json - Indice Correcto: "+indiceCorrecto);
-                                    System.out.println("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC");
+                                    //System.out.println("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC");
+                                    //System.out.println("Debugging=> Clase Json - ALMACENAMIENTO CLAVES =>flagEsValor en falso. Se almacenan CLAVES. propiedad: "+propiedadLimpia);
+                                    //System.out.println("Debugging=> Clase Json - Indice Correcto: "+indiceCorrecto);
+                                    //System.out.println("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC");
                                     arregloClaves[indiceCorrecto] = propiedadLimpia;
                                 }
 
@@ -205,10 +205,10 @@ public class Json {
                             // DE ACUERDO CON EL DEBUGGING HAY PROPIEDADES QUE VAN VACIAS POR EL PROCESAMIENTO, ASI QUE ES MEJOR VALIDAR ANTES DE INSERTAR
                             if(propiedadLimpia != "" || propiedadLimpia != null ){
                                 // System.out.println("Debugging=> Clase Json - Entro por claveLlena == true y propiedadLimpia diferente de null, y flagElementosAdicionales en false. claveLLena= "+claveLlena+" , propiedadLimpia: "+propiedadLimpia+" , flagElementosAdicionales: "+flagElementosAdicionales+ " , flagEsKeyValueCorrecto: "+flagEsKeyValueCorrecto);
-                                System.out.println("VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV");
-                                System.out.println("Debugging=> Clase Json - ALMACENAMIENTO VALORES=>flagEsValor en verdadero. Se almacenan VALORES. propiedad: "+propiedadLimpia);
-                                System.out.println("Debugging=> Clase Json - Indice Correcto: "+indiceCorrecto);
-                                System.out.println("VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV");
+                                //System.out.println("VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV");
+                                //System.out.println("Debugging=> Clase Json - ALMACENAMIENTO VALORES=>flagEsValor en verdadero. Se almacenan VALORES. propiedad: "+propiedadLimpia);
+                                //System.out.println("Debugging=> Clase Json - Indice Correcto: "+indiceCorrecto);
+                                //System.out.println("VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV");
 
                                 arregloValores[indiceCorrecto] = propiedadLimpia;
                                 // se almaceno el valor, podemos incrementar el indice correcto en uno
@@ -255,12 +255,12 @@ public class Json {
 
     public void verParClaveValores(){
         System.out.println("*************************");
-        System.out.println("Debugging=> Clase Json - PROCESAMIENTO DE LOS ARREGLOS DE CLAVES Y VALORES");
-        System.out.println("Debugging=> Clase Json - Longitud Claves: "+this.getLongitudClaves());
+        System.out.println("Clase Json - PROCESAMIENTO DE LOS ARREGLOS DE CLAVES Y VALORES");
+        System.out.println("Clase Json - Longitud Claves: "+this.getLongitudClaves());
         for (int i = 0; i < this.getLongitudClaves(); i++) {
-            System.out.println("Debugging=> Clase Json - Valor i =>"+i);
-            System.out.println("Debugging=> Clase Json - Clave =>"+this.Claves[i]);
-            System.out.println("Debugging=> Clase Json - Valor =>"+this.Valores[i]);
+            System.out.println("Clase Json - Valor i =>"+i);
+            System.out.println("Clase Json - Clave =>"+this.Claves[i]);
+            System.out.println("Clase Json - Valor =>"+this.Valores[i]);
             System.out.println("*************************");
         }// fin for arreglos
     }

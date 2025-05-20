@@ -3,6 +3,7 @@ package com.prueba.model;
 import com.google.gson.annotations.SerializedName;
 
 public class TituloGson {
+    // creamos una clase serializando las propiedades que deseamos almacenar. Lo ideal es que el nombre de la propiedad de la API y el nombre de la variable de clase sean iguales
     @SerializedName("Title") // anotacion de Gson para que cuando encuentre el campo, proceda a asignar el valor en la variable despues de la anotacion
     private String nombre;
     @SerializedName("Released") // anotacion de Gson para que cuando encuentre el campo, proceda a asignar el valor en la variable despues de la anotacion
@@ -18,11 +19,6 @@ public class TituloGson {
     @SerializedName("Country")// anotacion de Gson para que cuando encuentre el campo, proceda a asignar el valor en la variable despues de la anotacion
     private String pais = "";
 
-
-
-    public TituloGson(){
-        this.setNombre("");
-    }
 
     public void setNombre(String nombre){
         this.nombre = nombre;
@@ -53,42 +49,6 @@ public class TituloGson {
     public void setPais(String pais){ this.pais = pais;}
     public String getPais(){return this.pais;}
 
-
-
-    public void extraerInformacionArreglos(String[] arrClaves, String[] arrValores){
-        // recorremos el arreglo de claves para extraer la información específica para el objeto Titulo
-        String clavesIgnoradas = "";
-        for(int i=0; i < arrClaves.length; i++){
-            // extraemos el titulo del arreglo
-            if(arrClaves[i].equals("Title")){
-                this.setNombre(arrValores[i]);
-            }
-            else if(arrClaves[i].equals("Released")){
-                this.setLanzamiento(arrValores[i]);
-            }
-            else if(arrClaves[i].equals("Runtime")){
-                this.setDuracion(arrValores[i]);
-            }
-            else if(arrClaves[i].equals("Genre")){
-                this.setGenero(arrValores[i]);
-            }
-            else if(arrClaves[i].equals("Director")){
-                this.setDirector(arrValores[i]);
-            }
-            else if(arrClaves[i].equals("Plot")){
-                this.setTrama(arrValores[i]);
-            }
-            else if(arrClaves[i].equals("Country")){
-                this.setPais(arrValores[i]);
-            }
-            else{
-                // guardamos en un string las claves no usadas para mostrar despues
-                clavesIgnoradas = clavesIgnoradas.concat(" ,").concat(arrClaves[i]);
-            }
-        }//fin for
-        // almacenamos las claves no usadas en el objeto
-
-    }// fin extraerInformacion
 
     public void listarInformacionAlmacenada(){
         System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&");
