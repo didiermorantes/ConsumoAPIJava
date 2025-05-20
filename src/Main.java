@@ -14,30 +14,38 @@ import com.prueba.model.Json;
 public class Main {
     public static void main(String[] args) {
         SolicitudAsincrona objetoSolicitud = new SolicitudAsincrona();
-        System.out.println("La URL es: "+objetoSolicitud.mostrarURL());
+        System.out.println("Mensaje main: La URL es: "+objetoSolicitud.mostrarURL());
         objetoSolicitud.consumirEndpointRequest();
-        System.out.println("La respuesta tipo request es: " +objetoSolicitud.getRespuestaAPIRequest());
+        System.out.println("Mensaje main: La respuesta tipo request es: " +objetoSolicitud.getRespuestaAPIRequest());
         objetoSolicitud.consumirEndpointResponse();
-        System.out.println("La respuesta tipo response es:"+objetoSolicitud.getRespuestaAPIResponse());
+        System.out.println("Mensaje main: La respuesta tipo response es:"+objetoSolicitud.getRespuestaAPIResponse());
         // construimos un objeto para procesar el JSON y obtener arreglos con las claves y valores
         Json objetoJson = new Json();
-        objetoJson.procesarJson(objetoSolicitud.getRespuestaAPIResponse());
-        // construimos un objeto para asignar los arreglos con clave y valor a las variables del objeto
-        Titulo objetoTitulo = new Titulo();
+        Boolean jsonProcesado = false;
 
-        // String[] tempClaves = objetoJson.getClaves();
-        // String[] tempValores = objetoJson.getValores();
-        // System.out.println("Clave posicion 1: "+tempClaves[1]);
-        // System.out.println("Valor posicion 1: "+tempValores[1]);
+        jsonProcesado =  objetoJson.procesarJson(objetoSolicitud.getRespuestaAPIResponse());
 
-        objetoTitulo.extraerInformacionArreglos(objetoJson.getClaves(), objetoJson.getValores());
-        objetoTitulo.listarInformacionAlmacenada();
 
-        // procesamos el Json con la biblioteca Gson y probar sus capacidades
-        BibliotecaGson objetoGson = new BibliotecaGson();
+        if(jsonProcesado){ // si el json se proceso creamos el objeto titulo con los datos procesados del json
+            objetoJson.verParClaveValores(); // observamos la informacion almacenada en el objetoJson
+            // construimos un objeto para asignar los arreglos con clave y valor a las variables del objeto
+            Titulo objetoTitulo = new Titulo();
 
-        TituloGson objetoTituloGson = objetoGson.procesarJson(objetoSolicitud.getRespuestaAPIResponse());
-        objetoTituloGson.listarInformacionAlmacenada();
+            // String[] tempClaves = objetoJson.getClaves();
+            // String[] tempValores = objetoJson.getValores();
+            // System.out.println("Clave posicion 1: "+tempClaves[1]);
+            // System.out.println("Valor posicion 1: "+tempValores[1]);
+
+            objetoTitulo.extraerInformacionArreglos(objetoJson.getClaves(), objetoJson.getValores());
+            objetoTitulo.listarInformacionAlmacenada();
+
+            // procesamos el Json con la biblioteca Gson y probar sus capacidades
+            BibliotecaGson objetoGson = new BibliotecaGson();
+
+            TituloGson objetoTituloGson = objetoGson.procesarJson(objetoSolicitud.getRespuestaAPIResponse());
+            objetoTituloGson.listarInformacionAlmacenada();
+        }
+
 
 
 
