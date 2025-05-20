@@ -51,33 +51,39 @@ public class Titulo {
 
     public void extraerInformacionArreglos(String[] arrClaves, String[] arrValores){
         // recorremos el arreglo de claves para extraer la información específica para el objeto Titulo
-        String clavesIgnoradas = "";
+        // System.out.println("Metodo interno extraerInformacionArreglos arrClaves[1]: "+ arrClaves[1]);
+       //  System.out.println("Metodo interno extraerInformacionArreglos arrValores[1]: "+ arrValores[1]);
+        String elementoProcesar = "";
+        String clavesIgnoradas = "-";
         for(int i=0; i < arrClaves.length; i++){
+            elementoProcesar = arrClaves[i];
+            // System.out.println("Elemento a procesar: "+elementoProcesar);
             // extraemos el titulo del arreglo
-            if(arrClaves[i].equals("Title")){
+            if("Title".equals(elementoProcesar)){
                 this.setNombre(arrValores[i]);
             }
-            else if(arrClaves[i].equals("Released")){
+            else if("Released".equals(elementoProcesar)){
                 this.setLanzamiento(arrValores[i]);
             }
-            else if(arrClaves[i].equals("Runtime")){
+            else if("Runtime".equals(elementoProcesar)){
                 this.setDuracion(arrValores[i]);
             }
-            else if(arrClaves[i].equals("Genre")){
+            else if("Genre".equals(elementoProcesar)){
                 this.setGenero(arrValores[i]);
             }
-            else if(arrClaves[i].equals("Director")){
+            else if("Director".equals(elementoProcesar)){
                 this.setDirector(arrValores[i]);
             }
-            else if(arrClaves[i].equals("Plot")){
+            else if("Plot".equals(elementoProcesar)){
                 this.setTrama(arrValores[i]);
             }
-            else if(arrClaves[i].equals("Country")){
+            else if("Country".equals(elementoProcesar)){
                 this.setPais(arrValores[i]);
             }
             else{
                 // guardamos en un string las claves no usadas para mostrar despues
-                clavesIgnoradas = clavesIgnoradas.concat(" ,").concat(arrClaves[i]);
+               // clavesIgnoradas = clavesIgnoradas.concat(" ,").concat(elementoProcesar);
+                clavesIgnoradas = clavesIgnoradas +" ,"+ elementoProcesar;
             }
         }//fin for
         // almacenamos las claves no usadas en el objeto

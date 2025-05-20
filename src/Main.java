@@ -24,6 +24,12 @@ public class Main {
         objetoJson.procesarJson(objetoSolicitud.getRespuestaAPIResponse());
         // construimos un objeto para asignar los arreglos con clave y valor a las variables del objeto
         Titulo objetoTitulo = new Titulo();
+
+        // String[] tempClaves = objetoJson.getClaves();
+        // String[] tempValores = objetoJson.getValores();
+        // System.out.println("Clave posicion 1: "+tempClaves[1]);
+        // System.out.println("Valor posicion 1: "+tempValores[1]);
+
         objetoTitulo.extraerInformacionArreglos(objetoJson.getClaves(), objetoJson.getValores());
         objetoTitulo.listarInformacionAlmacenada();
 

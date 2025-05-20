@@ -8,6 +8,7 @@ public class Json {
     private String[] Claves;
     private String[] Valores;
     private int longitudArreglo;
+    private int longitudClaves;
 
 
     public void setLongitudArreglo(int longitudArreglo){
@@ -17,10 +18,19 @@ public class Json {
         return this.longitudArreglo;
     }
 
+    public void setLongitudClaves(int longitudClaves){
+        this.longitudClaves = longitudClaves;
+    }
+    public int getLongitudClaves(){
+        return this.longitudClaves;
+    }
+
+    public void setClaves(String[] Claves){ this.Claves = Claves; }
     public String[] getClaves(){
         return this.Claves;
     }
 
+    public void setValores(String[] Valores){ this.Valores = Valores; }
     public String[] getValores(){
         return this.Valores;
     }
@@ -38,20 +48,28 @@ public class Json {
         // almacenamos la logitud del arreglo
         this.longitudArreglo = keyValuePairs.length;
         // Definimos arreglos para las claves y los valores con dimensión igual al arreglo que tiene todos los clave-valor
-        String[] arregloClaves = new String[this.longitudArreglo];
-        String[] arregloValores = new String[this.longitudArreglo];
+        String[] arregloClaves = new String[22]; // la dimension es 2 porque es la cantidad de respuestas de la API http://www.omdbapi.com/?t=dancing%20with%20the%20stars&apikey=c184ab6c
+        String[] arregloValores = new String[22];
 
         // variables para determinar si hay datos adicionales en el JSON que fueron cortados al hacer split con la coma (,)
         String elementosAdicionales = "";
         Boolean flagElementosAdicionales = false;
         Boolean flagEsValor = false;
+        Boolean flagEsKeyValueCorrecto = false;
+        Boolean claveLlena = false;
+        int indiceCorrecto = 0;
+        String claveCorrecta = "";
+        String valorCorrecto = "";
         int sincroniaIndices = 0;
 
+        System.out.println("Longitud del arreglo par clave-valor: "+this.longitudArreglo);
 
         System.out.println("=========================");
         // finalmente recorremos el arreglo de claves par llave-valor, para crear un arreglo para llaves y otro para valores
         for (int i = 0; i < this.longitudArreglo; i++) {
+            System.out.println("Valor de i =>"+i);
             System.out.println("Key:Value =>"+keyValuePairs[i]);
+            flagEsKeyValueCorrecto = this.procesarKeyValue(keyValuePairs[i]);
             // separamos cada uno de los elementos del resultado para extraer la clave y el valor por serparado
             String[] arrElementos = keyValuePairs[i].split(":");
 
@@ -71,7 +89,7 @@ public class Json {
                     propiedadLimpia = arrElementos[j].replace("{", "").replace("}", "").replace("\"", "");
                     System.out.println("Propiedad Limpia =>"+propiedadLimpia);
                 }
-                else{
+                else{ // la propiedad no es limpia
                     flagElementosAdicionales = true;
                     // validamos si sincroniaIndices esta recien establecido para guardar el valor de i
                     if( sincroniaIndices == 0){
@@ -104,50 +122,99 @@ public class Json {
                     }// fin  if interno
                 }// fin else
 
-                System.out.println("+++++++ DEBUGGING +++++++");
+                System.out.println("++++++++++++++");
                 System.out.println("Valor j= : "+j);
                 System.out.println("Valor propiedad limpia= : "+propiedadLimpia);
-                System.out.println("+++++++ FIN DEBUGGING +++++++");
-                // si j es igual a cero estamos observando las claves y almacenamos en el arregloClaves
-                if(j==0){
+                System.out.println("++++++++++++++");
+
+                // si claveLlena esta en false, significa que no se ha diligenciado la clave todavia
+                if(claveLlena==false){
 
                     // DE ACUERDO CON EL DEBUGGING HAY PROPIEDADES QUE VAN VACIAS POR EL PROCESAMIENTO, ASI QUE ES MEJOR VALIDAR ANTES DE INSERTAR
                     if( (propiedadLimpia != "" || propiedadLimpia != null) && flagElementosAdicionales == false ){
-                        System.out.println("Entro por j=0 y propiedadLimpia diferente de null, y no hay elementos adicionales. j= "+j+" , propiedadLimpia: "+propiedadLimpia+ ", flagElementosAdicionales: "+flagElementosAdicionales);
-                        if(flagEsValor == false){
+                        // es una clave limpia sin elementos adicionales
+                        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                        // si no es valor -significa que es clave- y el flagEsKeyValueCorrecto viene en true, procedemos a almacenar la clave en el arreglo porque
+                       // flagEsKeyValueCorrecto se activa cuando no viene json puro. Quizas los valores traen mas comas y dos puntos y se evalua asi
+                        if(flagEsValor == false && flagEsKeyValueCorrecto== true){
                             // no es un valor lo que se quiere almacenar
-                            System.out.println("ALMACENAMIENTO=>flagEsValor en falso. Se almacenan claves. flagEsValor "+flagEsValor);
-                            arregloClaves[i] = propiedadLimpia;
+                            System.out.println("Entro por clavellena==false y propiedadLimpia diferente de null, y no hay elementos adicionales y flagEsKeyValueCorrecto en true. claveLlena= "+claveLlena+" , propiedadLimpia: "+propiedadLimpia+ ", flagElementosAdicionales: "+flagElementosAdicionales+ " , flagEsKeyValueCorrecto: "+flagEsKeyValueCorrecto);
+                            System.out.println("Indice Correcto: "+indiceCorrecto);
+                            System.out.println("ALMACENAMIENTO=>flagEsValor en falso. Se almacenan CLAVES . flagEsValor "+flagEsValor);
+                            arregloClaves[indiceCorrecto] = propiedadLimpia;
+                            //actualizamos el valor de claveLlena a true para que no ingrese por esta rama del if
+                            claveLlena = true;
 
                         }
+
                         else{
-                            // es un valor lo que se quiere almacenar
-                            System.out.println("ALMACENAMIENTO=>flagEsValor en verdadero. Se almacenan valores. flagEsValor: "+flagEsValor);
-                            arregloValores[sincroniaIndices] = propiedadLimpia;
-                            // limpiamos el flag para una nueva verificacion
-                            flagEsValor = false;
+                            // es un valor lo que se quiere almacenar y no tiene  elementos adicionales, es decir camino con datos adicionales
+                            // cuando flagEsValor es indeterminado pues puede ser verdadero o falso... el que permite entrar a esta rama es flagEsKeyValueCorrecto, que para el procesamiento del valor vendra siempre en falso
+                            // flagEsKeyValueCorrecto cuando los valores traen muchos dos puntos y comas
+                            System.out.println(" ============CAMINO flagEsValor indeterminado y flagEsKeyValueCorrecto en falso =======================");
+                            System.out.println("Entro por clavellena==false y propiedadLimpia diferente de null, y no hay elementos adicionales y flagEsKeyValueCorrecto en false. claveLlena= "+claveLlena+" , propiedadLimpia: "+propiedadLimpia+ ", flagElementosAdicionales: "+flagElementosAdicionales+ " , flagEsKeyValueCorrecto: "+flagEsKeyValueCorrecto);
+                            System.out.println("ALMACENAMIENTO VALORES =>flagEsValor en indeterminado. Se almacenan VALORES. flagEsValor: "+flagEsValor);
+                            System.out.println("Indice Correcto: "+indiceCorrecto);
+
+                            arregloValores[indiceCorrecto] = propiedadLimpia;
+
                             //limpiamos la sincronia de indices para un nuevo valor
                             sincroniaIndices = 0;
+
+                            if( flagEsValor == true ){ // solo si viene un valor, pues puede venir una clave, y no sirve incrementar el indice correcto
+                                // limpiamos el flag para una nueva verificacion
+                                flagEsValor = false;
+                                //actualizamos el valor de claveLlena a false para que ingrese al proceso de diligenciar la clave, pues se guardo un valor
+                                claveLlena = false;
+                                //se almaceno el valor, podemos incrementar el indice correcto en uno
+                                indiceCorrecto = indiceCorrecto+1;
+                            }
+                            else{
+                                System.out.println(" ============CAMINO flagEsValor false y flagEsKeyValueCorrecto en falso =======================");
+                                System.out.println("Entro por clavellena==false y propiedadLimpia diferente de null, y no hay elementos adicionales y flagEsKeyValueCorrecto en false. claveLlena= "+claveLlena+" , propiedadLimpia: "+propiedadLimpia+ ", flagElementosAdicionales: "+flagElementosAdicionales+ " , flagEsKeyValueCorrecto: "+flagEsKeyValueCorrecto);
+                                System.out.println("ALMACENAMIENTO VALORES =>flagEsValor en falso. Se almacenan CLAVES. flagEsValor: "+flagEsValor);
+                                arregloClaves[indiceCorrecto] = propiedadLimpia;
+                            }
+
+
+
+
                         }
+                        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
 
                     }
 
 
                 }
-                else{ // si j no es cero, estamos observando los valores y almacenamos en el arregloValores
+                else{ // si claveLlena no esta en false, estamos observando los valores y almacenamos en el arregloValores, ademas que procesamos los elementos adicionales
+                    // viene un valor
+                    System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                    flagEsValor = true;
                     // si la bandera de datos adicionales esta en false , significa que ya se terminaron de concatenar los datos adicionales
                     if(flagElementosAdicionales == false){
                         // DE ACUERDO CON EL DEBUGGING HAY PROPIEDADES QUE VAN VACIAS POR EL PROCESAMIENTO, ASI QUE ES MEJOR VALIDAR ANTES DE INSERTAR
                         if(propiedadLimpia != "" || propiedadLimpia != null ){
-                            System.out.println("Entro por j != 0 y propiedadLimpia diferente de null, y flagElementosAdicionales en false. j= "+j+" , propiedadLimpia: "+propiedadLimpia+" , flagElementosAdicionales: "+flagElementosAdicionales);
-                            arregloValores[i] = propiedadLimpia;
-                        }
+                            System.out.println("Entro por claveLlena == true y propiedadLimpia diferente de null, y flagElementosAdicionales en false. claveLLena= "+claveLlena+" , propiedadLimpia: "+propiedadLimpia+" , flagElementosAdicionales: "+flagElementosAdicionales+ " , flagEsKeyValueCorrecto: "+flagEsKeyValueCorrecto);
+                            System.out.println("ALMACENAMIENTO=>flagEsValor en verdadero. Se almacenan VALORES. flagEsValor: "+flagEsValor);
+                            System.out.println("Indice Correcto: "+indiceCorrecto);
 
+                            arregloValores[indiceCorrecto] = propiedadLimpia;
+                            // se almaceno el valor, podemos incrementar el indice correcto en uno
+                            indiceCorrecto = indiceCorrecto+1;
+                            // limpiamos el flag para una nueva verificacion
+                            flagEsValor = false;
+                            //limpiamos la sincronia de indices para un nuevo valor
+                            sincroniaIndices = 0;
+                            //actualizamos el valor de claveLlena a false para que ingrese al proceso de diligenciar la clave
+                            claveLlena = false;
+
+                        }
 
                     }
                     // de lo contrario no hacemos nada hasta que los datos adicionales se hayan concatenado
-
-                }
+                    System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                }// fin else
             }//fin for interno
 
 
@@ -158,12 +225,16 @@ public class Json {
 
 
         // ALMACENAMOS EN EL OBJETO LOS ARREGLOS DE CLAVES Y VALORES OBTENIDOS
-        this.Claves = arregloClaves;
-        this.Valores = arregloValores;
+        this.setClaves(arregloClaves);;
+        this.setValores(arregloValores);
+        this.setLongitudClaves(arregloClaves.length);
+
 
         System.out.println("*************************");
         System.out.println("PROCESAMIENTO DE LOS ARREGLOS DE CLAVES Y VALORES");
-        for (int i = 0; i < this.longitudArreglo; i++) {
+        System.out.println("Longitud Claves: "+this.getLongitudClaves());
+        for (int i = 0; i < indiceCorrecto; i++) {
+            System.out.println("Valor i =>"+i);
             System.out.println("Clave =>"+this.Claves[i]);
             System.out.println("Valor =>"+this.Valores[i]);
             System.out.println("*************************");
@@ -172,4 +243,34 @@ public class Json {
 
     }// fin procesar JSON
 
-}
+
+    public Boolean procesarKeyValue(String keyValue) {
+        Boolean keyValuePerfecto = false;
+        int longitudString = keyValue.length();
+        char caracter = 'a';
+        int contadorComillas = 0;
+        int contadorDosPuntos = 0;
+        // creamos un ciclo para recorrer el string
+        for (int i = 0; i < longitudString; i++) {
+            caracter = keyValue.charAt(i); // extraemos cada caracter
+            if (caracter == '"') {
+                contadorComillas = contadorComillas + 1;
+            } else if (caracter == ':') {
+                contadorDosPuntos = contadorDosPuntos + 1;
+            }// fin if
+        }// fin for
+
+        System.out.println("???????????????????????????");
+        System.out.println("Cantidad de comillas dobles en el keyValue: "+ contadorComillas);
+        System.out.println("Cantidad de dos puntos en el keyValue: "+ contadorDosPuntos);
+        // validamos cantidad de comillas y dos puntos en un json perfecto
+        // si hay cuatro comillas y un solo dos puntos, es un json sin caracteres adicionales como comas o dos puntos en los valores, por ejemplo una url o un texto largo con comas
+        if(contadorComillas == 4 && contadorDosPuntos==1){
+            keyValuePerfecto = true;
+        }
+        System.out.println("Valor Booleano del keyValuePerfecto: "+ keyValuePerfecto );
+        System.out.println("???????????????????????????");
+
+        return keyValuePerfecto;
+    }// fin procesarKeyValue
+} // fin clase
