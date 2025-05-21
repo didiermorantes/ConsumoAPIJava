@@ -13,4 +13,10 @@ public class BibliotecaGson {
         TituloGson respuestaTitulo = gson.fromJson(elJson, TituloGson.class );
         return respuestaTitulo;
     }
+
+    public TituloRecord procesarJsonRecord(String elJson){
+        Gson gson = new Gson();
+        TituloRecord respuestaTituloRecord = gson.fromJson(elJson, TituloRecord.class );
+        return respuestaTituloRecord;
+    }
 }

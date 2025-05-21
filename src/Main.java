@@ -4,10 +4,8 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-import com.prueba.model.BibliotecaGson;
-import com.prueba.model.Titulo;
-import com.prueba.model.TituloGson;
-import com.prueba.model.Json;
+import com.prueba.model.*;
+import com.google.gson.Gson;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -48,6 +46,11 @@ public class Main {
 
         TituloGson objetoTituloGson = objetoGson.procesarJson(objetoSolicitud.getRespuestaAPIResponse());
         objetoTituloGson.listarInformacionAlmacenada();
+
+        // procesamos el Json con la biblioteca Gson y el Record. Se implementa el metodo procesarJsonRecord para adaptar el retorno de la función a la clase TituloRecord
+        TituloRecord objetoTituloRecord = objetoGson.procesarJsonRecord(objetoSolicitud.getRespuestaAPIRequest());
+        System.out.println("Objeto Record: "+objetoTituloRecord);
+
 
 
 
