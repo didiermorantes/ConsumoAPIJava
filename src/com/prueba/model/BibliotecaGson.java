@@ -1,6 +1,8 @@
 package com.prueba.model;
 
+import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.prueba.model.TituloGson;
 
 public class BibliotecaGson {
@@ -18,5 +20,19 @@ public class BibliotecaGson {
         Gson gson = new Gson();
         TituloRecord respuestaTituloRecord = gson.fromJson(elJson, TituloRecord.class );
         return respuestaTituloRecord;
+    }
+
+    public TituloMinusculaRecord procesarJsonRecordMinuscula(String elJson){
+        // se utiliza el patron Builder para implementar la politica en el objeto gson que permite que las propiedades que vengan de la API se almacenen sin distinguir las mayusculas
+        Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create();
+        TituloMinusculaRecord respuestaTituloMinuscula = gson.fromJson(elJson, TituloMinusculaRecord.class );
+        return respuestaTituloMinuscula;
+    }
+
+    public TituloNumerosRecord procesarJsonRecordNumeros(String elJson){
+        // se utiliza el patron Builder para implementar la politica en el objeto gson que permite que las propiedades que vengan de la API se almacenen sin distinguir las mayusculas
+        Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create();
+        TituloNumerosRecord respuestaTituloNumeros = gson.fromJson(elJson, TituloNumerosRecord.class );
+        return respuestaTituloNumeros;
     }
 }

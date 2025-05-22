@@ -14,6 +14,28 @@ public class Titulo {
 
     public Titulo(){
         this.setNombre("");
+        this.setLanzamiento("");
+        this.setDuracion("");
+        this.setGenero("");
+        this.setDirector("");
+        this.setTrama("");
+        this.setPais("");
+
+    }
+
+
+    // creamos un constructor que recibe como argumento un objeto de clase TituloRecord
+    // el record ya posee integrados los getters y los setters, y se pueden obtener las propiedades mediante nombreObjeto.nombrePropiedad()
+    // ejemplo objetoTituloRecord.Title();
+    public Titulo(TituloRecord objetoTituloRecord){
+        this.setNombre(objetoTituloRecord.Title());
+        this.setLanzamiento(objetoTituloRecord.Released());
+        this.setDuracion(objetoTituloRecord.Runtime());
+        this.setGenero(objetoTituloRecord.Genre());
+        this.setDirector(objetoTituloRecord.Director());
+        this.setTrama(objetoTituloRecord.Plot());
+        this.setPais(objetoTituloRecord.Country());
+
     }
 
     public void setNombre(String nombre){
@@ -103,6 +125,22 @@ public class Titulo {
         System.out.println("Claves no usadas del Json: "+this.getClavesNoUsadas());
         System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%");
     }// fin listarInformacion
+
+    // metodo toString para mostrar informacion del objeto imprimiendo directamente el objeto sin invocar algun metodo
+    // el metodo ya existe en el objeto asi que se tiene que sobre escribir
+    @Override
+    public String toString(){
+        return  "oooooooooooooooooooooooooooooooooooooooo"+
+                "\n Salida metodo toString() clase Titulo "+
+                "\n Titulo de la pelicula: "+this.getNombre()+
+                "\n Fecha de lanzamiento de la pelicula: "+this.getLanzamiento()+
+                "\n Duracion de la pelicula: "+this.getDuracion()+
+                "\n Genero de la pelicula: "+this.getGenero()+
+                "\n Director de lanzamiento de la pelicula: "+this.getDirector()+
+                "\n Trama de la pelicula: "+this.getTrama()+
+                "\n Pais de la pelicula: "+this.getPais()+
+                "\n oooooooooooooooooooooooooooooooooooooooo";
+    }// fin toString
 
 
 

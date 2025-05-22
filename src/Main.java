@@ -51,6 +51,34 @@ public class Main {
         TituloRecord objetoTituloRecord = objetoGson.procesarJsonRecord(objetoSolicitud.getRespuestaAPIRequest());
         System.out.println("Objeto Record: "+objetoTituloRecord);
 
+        // procesamos el Json con la biblioteca Gson y el Record con minuscula y la politica. Se implementa el metodo  procesarJsonRecordMinuscula para adaptar el retorno de la función a la clase TituloMinusculaRecord
+        TituloMinusculaRecord objetoTituloMinuscula = objetoGson.procesarJsonRecordMinuscula(objetoSolicitud.getRespuestaAPIResponse());
+        System.out.println("Objeto Record Minuscula: "+objetoTituloMinuscula);
+
+        // Enviamos los elementos obtenidos con la biblioteca Gson y el record a un objeto tipo titulo, que tiene la funcionalidad que esperamos
+        // de esta manera usamos el DTO. El objeto que ya tenemos y que siempre se utiliza -De la clase Titulo-, lo usamos para recibir datos extraidos con el record
+        // Titulo es el objeto que hemos definido para presentar la información
+        Titulo objetoTituloGsonRecord = new Titulo(objetoTituloRecord);
+        // imprimimos con el metodo toString sobreescrito
+        System.out.println(objetoTituloGsonRecord);
+
+    // Esto arrojará error porque la clase TituloNumerosRecord posee una propiedad de tipo int que es incompatible con el string que entrega la api. Es imposible mapear
+        try{
+            // encapsulamos la porción de código susceptible de error
+            System.out.println("Inicia proceso de clase TituloNumerosRecord");
+            TituloNumerosRecord objetoTituloNumeros = objetoGson.procesarJsonRecordNumeros(objetoSolicitud.getRespuestaAPIResponse());
+            System.out.println("Objeto Record Numeros: "+objetoTituloNumeros);
+        }
+        catch(Exception e){
+            System.out.println("Ocurrio una excepcion general con la clase TituloNumerosRecord: "+e.getMessage());
+        }
+        finally {
+            System.out.println("Finaliza proceso de clase TituloNumerosRecord");
+        }
+
+
+
+
 
 
 
