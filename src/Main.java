@@ -69,6 +69,9 @@ public class Main {
             TituloNumerosRecord objetoTituloNumeros = objetoGson.procesarJsonRecordNumeros(objetoSolicitud.getRespuestaAPIResponse());
             System.out.println("Objeto Record Numeros: "+objetoTituloNumeros);
         }
+        catch(ExcepcionPersonalizada e){
+            System.out.println("Ocurrio excepcion personalizada: "+e.getMessage());
+        }
         catch(Exception e){
             System.out.println("Ocurrio una excepcion general con la clase TituloNumerosRecord: "+e.getMessage());
         }

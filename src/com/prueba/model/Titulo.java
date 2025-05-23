@@ -30,6 +30,9 @@ public class Titulo {
     public Titulo(TituloRecord objetoTituloRecord){
         this.setNombre(objetoTituloRecord.Title());
         this.setLanzamiento(objetoTituloRecord.Released());
+        if(objetoTituloRecord.Runtime().contains("N/A")){
+            throw new ExcepcionPersonalizada("Encontre N/A en campo Runtime");
+        }
         this.setDuracion(objetoTituloRecord.Runtime());
         this.setGenero(objetoTituloRecord.Genre());
         this.setDirector(objetoTituloRecord.Director());
