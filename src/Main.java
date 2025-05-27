@@ -1,11 +1,6 @@
-import java.io.UncheckedIOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-
+import com.prueba.excepcion.ExcepcionPersonalizada;
 import com.prueba.model.*;
-import com.google.gson.Gson;
+import com.prueba.persistencia.Archivo;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -23,6 +18,10 @@ public class Main {
 
         jsonProcesado =  objetoJson.procesarJson(objetoSolicitud.getRespuestaAPIResponse());
 
+        // objeto para almacenar en archivo de texto
+        Archivo objetoArchivo = new Archivo();
+        String mensajeAlmacenamiento="";
+        String mensajeLectura ="";
 
         if(jsonProcesado){ // si el json se proceso creamos el objeto titulo con los datos procesados del json
             // observamos los par clave valor si procesarJson retorna true
@@ -38,14 +37,25 @@ public class Main {
 
             objetoTitulo.extraerInformacionArreglos(objetoJson.getClaves(), objetoJson.getValores());
             objetoTitulo.listarInformacionAlmacenada();
-
+            // aplicamos la persistencia
+            mensajeAlmacenamiento = objetoArchivo.guardarDato(objetoTitulo);
+            System.out.println(mensajeAlmacenamiento);
         }
+
+
+
+
+
+        // Esto arrojará error porque la clase TituloNumerosRecord posee una propiedad de tipo int que es incompatible con el string que entrega la api. Es imposible mapear
+        try{
+            // encapsulamos la porción de código susceptible de error
 
         // procesamos el Json con la biblioteca Gson y probar sus capacidades
         BibliotecaGson objetoGson = new BibliotecaGson();
 
         TituloGson objetoTituloGson = objetoGson.procesarJson(objetoSolicitud.getRespuestaAPIResponse());
         objetoTituloGson.listarInformacionAlmacenada();
+
 
         // procesamos el Json con la biblioteca Gson y el Record. Se implementa el metodo procesarJsonRecord para adaptar el retorno de la función a la clase TituloRecord
         TituloRecord objetoTituloRecord = objetoGson.procesarJsonRecord(objetoSolicitud.getRespuestaAPIRequest());
@@ -58,19 +68,30 @@ public class Main {
         // Enviamos los elementos obtenidos con la biblioteca Gson y el record a un objeto tipo titulo, que tiene la funcionalidad que esperamos
         // de esta manera usamos el DTO. El objeto que ya tenemos y que siempre se utiliza -De la clase Titulo-, lo usamos para recibir datos extraidos con el record
         // Titulo es el objeto que hemos definido para presentar la información
+            // esta porcion es la que podría lanzar una excepcion porque asigna a un objeto titulo lo que viene de tituloRecord
         Titulo objetoTituloGsonRecord = new Titulo(objetoTituloRecord);
         // imprimimos con el metodo toString sobreescrito
         System.out.println(objetoTituloGsonRecord);
+        // aplicamos la persistencia
+        mensajeAlmacenamiento = objetoArchivo.guardarDato(objetoTituloGsonRecord);
+        System.out.println(mensajeAlmacenamiento);
 
-    // Esto arrojará error porque la clase TituloNumerosRecord posee una propiedad de tipo int que es incompatible con el string que entrega la api. Es imposible mapear
-        try{
-            // encapsulamos la porción de código susceptible de error
+        // leemos del archivo de texto
+        mensajeLectura = objetoArchivo.leerDato(objetoTituloGsonRecord);
+        System.out.println("Datos leidos del archivo de texto: ");
+        System.out.println(mensajeLectura);
+
+
+
+
+            // procesamos el Json con la biblioteca Gson y probar sus capacidades. Lo hacemos con un objeto diferente porque esta porción arrojara error
+            BibliotecaGson objetoGsonError = new BibliotecaGson();
             System.out.println("Inicia proceso de clase TituloNumerosRecord");
-            TituloNumerosRecord objetoTituloNumeros = objetoGson.procesarJsonRecordNumeros(objetoSolicitud.getRespuestaAPIResponse());
+            TituloNumerosRecord objetoTituloNumeros = objetoGsonError.procesarJsonRecordNumeros(objetoSolicitud.getRespuestaAPIResponse());
             System.out.println("Objeto Record Numeros: "+objetoTituloNumeros);
         }
         catch(ExcepcionPersonalizada e){
-            System.out.println("Ocurrio excepcion personalizada: "+e.getMessage());
+            System.out.println("Ocurrio una expcepción personalizada: "+e.getMessage());
         }
         catch(Exception e){
             System.out.println("Ocurrio una excepcion general con la clase TituloNumerosRecord: "+e.getMessage());
@@ -78,6 +99,9 @@ public class Main {
         finally {
             System.out.println("Finaliza proceso de clase TituloNumerosRecord");
         }
+
+
+
 
 
 

@@ -1,0 +1,10 @@
+oooooooooooooooooooooooooooooooooooooooo
+ Salida metodo toString() clase Titulo 
+ Titulo de la pelicula: Dancing with the Stars
+ Fecha de lanzamiento de la pelicula: 01 Jun 2005
+ Duracion de la pelicula: 60 min
+ Genero de la pelicula: Family, Music, Reality-TV
+ Director de lanzamiento de la pelicula: N/A
+ Trama de la pelicula: U.S. reality show based on the British series "Strictly Come Dancing," where celebrities partner up with professional dancers and compete against each other in weekly elimination rounds to determine a winner.
+ Pais de la pelicula: United States
+ oooooooooooooooooooooooooooooooooooooooo

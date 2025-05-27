@@ -1,5 +1,7 @@
 package com.prueba.model;
 
+import com.prueba.excepcion.ExcepcionPersonalizada;
+
 public class Titulo {
 
     private String nombre;
@@ -30,8 +32,9 @@ public class Titulo {
     public Titulo(TituloRecord objetoTituloRecord){
         this.setNombre(objetoTituloRecord.Title());
         this.setLanzamiento(objetoTituloRecord.Released());
+        // lanzamos la excepcion personalizada cuando  Runtime traiga N/A. Probar con el titulo bichos
         if(objetoTituloRecord.Runtime().contains("N/A")){
-            throw new ExcepcionPersonalizada("Encontre N/A en campo Runtime");
+            throw new ExcepcionPersonalizada("Excepcion Personalizada: ->Encontre N/A en campo Runtime");
         }
         this.setDuracion(objetoTituloRecord.Runtime());
         this.setGenero(objetoTituloRecord.Genre());

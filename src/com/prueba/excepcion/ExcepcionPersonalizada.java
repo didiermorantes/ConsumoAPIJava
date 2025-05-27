@@ -1,4 +1,4 @@
-package com.prueba.model;
+package com.prueba.excepcion;
 // si extiende a RuntimeException es una excepcion no verificada
 //significa que la clase que captura//arroja la excepcion no tiene que implementar throwable
 // estudiar diferencias entre excepciones verificadas y no verificadas
