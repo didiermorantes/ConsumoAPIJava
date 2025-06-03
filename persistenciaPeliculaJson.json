@@ -1,0 +1,32 @@
+[
+  {
+    "Nombre": "Matrix",
+    "Lanzamiento": "01 Mar 1993",
+    "Duracion": "60 min",
+    "Genero": "Action, Drama, Fantasy",
+    "Director": "N/A",
+    "Trama": "Hitman Steven Matrix is shot, experiences afterlife, gets second chance by helping others. Wakes up, meets guides assigning cases where he aids people using unorthodox methods from past profession.",
+    "Pais": "Canada",
+    "ClavesNoUsadas": ""
+  },
+  {
+    "Nombre": "Encanto",
+    "Lanzamiento": "24 Nov 2021",
+    "Duracion": "102 min",
+    "Genero": "Animation, Comedy, Family",
+    "Director": "Jared Bush, Byron Howard, Charise Castro Smith",
+    "Trama": "An extraordinary family, the Madrigals, live hidden in the mountains of Colombia, in a magical house called an Encanto. The magic of the Encanto has blessed every child in the family with a unique gift - every child except one, Mi...",
+    "Pais": "United States",
+    "ClavesNoUsadas": ""
+  },
+  {
+    "Nombre": "Dancing with the Stars",
+    "Lanzamiento": "01 Jun 2005",
+    "Duracion": "60 min",
+    "Genero": "Family, Music, Reality-TV",
+    "Director": "N/A",
+    "Trama": "U.S. reality show based on the British series \"Strictly Come Dancing,\" where celebrities partner up with professional dancers and compete against each other in weekly elimination rounds to determine a winner.",
+    "Pais": "United States",
+    "ClavesNoUsadas": ""
+  }
+]

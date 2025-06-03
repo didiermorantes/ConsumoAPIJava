@@ -1,7 +1,11 @@
+import com.prueba.model.Titulo;
+
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -14,12 +18,24 @@ public class SolicitudAsincrona {
     private String pelicula = "";
 
     public SolicitudAsincrona(){
-        this.asignarPelicula();
         // this.endpoint = "http://www.omdbapi.com/?t=tt3896198&apikey=";
         this.endpoint = "http://www.omdbapi.com/?t=";
         this.apiKey = "&apikey=c184ab6c";
-        this.url = this.endpoint.concat(this.getPelicula()).concat(this.apiKey);
+
+        this.asignarPelicula();
+
     }
+
+    public SolicitudAsincrona(String muchasSolicitudes){
+        // cuando se manda un String en el constructor, significa que no se hará el llamado al método asignar pelicula
+
+        // this.endpoint = "http://www.omdbapi.com/?t=tt3896198&apikey=";
+        this.endpoint = "http://www.omdbapi.com/?t=";
+        this.apiKey = "&apikey=c184ab6c";
+
+    }
+
+
 
 
 
@@ -57,7 +73,10 @@ public class SolicitudAsincrona {
         nombrePelicula = atrapar.nextLine();
         nuevoNombrePelicula = this.transformarEspacios(nombrePelicula);
         setPelicula(nuevoNombrePelicula);
+        // esta instruccion configura el endpoint a consumir de acuerdo con el nombre de la pelicula digitado
+        this.url = this.endpoint.concat(this.getPelicula()).concat(this.apiKey);
     }
+
 
     public String transformarEspacios(String urlConEspacios){
         String urlTransformada = "";

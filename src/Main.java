@@ -2,6 +2,9 @@ import com.prueba.excepcion.ExcepcionPersonalizada;
 import com.prueba.model.*;
 import com.prueba.persistencia.Archivo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
@@ -21,7 +24,9 @@ public class Main {
         // objeto para almacenar en archivo de texto
         Archivo objetoArchivo = new Archivo();
         String mensajeAlmacenamiento="";
+        String mensajeAlmacenamientoJson="";
         String mensajeLectura ="";
+        String mensajeLecturaScanner ="";
 
         if(jsonProcesado){ // si el json se proceso creamos el objeto titulo con los datos procesados del json
             // observamos los par clave valor si procesarJson retorna true
@@ -77,9 +82,14 @@ public class Main {
         System.out.println(mensajeAlmacenamiento);
 
         // leemos del archivo de texto
-        mensajeLectura = objetoArchivo.leerDato(objetoTituloGsonRecord);
+        mensajeLectura = objetoArchivo.leerDato();
         System.out.println("Datos leidos del archivo de texto: ");
         System.out.println(mensajeLectura);
+
+        // leemos del archivo de texto con objeto Scanner
+        mensajeLecturaScanner = objetoArchivo.leerDatoScanner();
+        System.out.println("Datos leidos del archivo de texto con objeto Scanner: ");
+        System.out.println(mensajeLecturaScanner);
 
 
 
@@ -101,6 +111,60 @@ public class Main {
         }
 
 
+// PROCESAMIENTO DE MUCHOS TITULOS
+        // TENEMOS QUE CREAR NUEVOS OBJETOS PORQUE LA PRIMERA EJECUCION QUEDO DENTRO DE UN BLOQUE TRY-CATCH
+        // EL TRY PERTENECE A UN UNIVERSO DIFERENTE
+        System.out.println("++++++++++ PROCESAMIENTO MUCHOS TITULOS ++++++++++");
+        // variable para almacenar el nombre de la pelicula
+            String laPelicula = "";
+        // creamos una lista para almacenar los titulos consultados
+        List<Titulo> titulos = new ArrayList<>();
+        // variable para controlar el ciclo de muchas peliculas
+            boolean salir = false;
+
+            // construimos el objeto para realizar la solicitud a la API
+            SolicitudAsincrona objetoMuchasSolicitudes = new SolicitudAsincrona("Muchos");
+
+            // procesamos el Json con la biblioteca Gson y probar sus capacidades
+            BibliotecaGson objetoGsonMuchas = new BibliotecaGson();
+
+            while(salir != true){
+                // capturamos el nombre de la pelicula
+                objetoMuchasSolicitudes.asignarPelicula();
+                // validamos el nombre de la pelicula para saber si salimos del ciclo o procesamos la solicitud
+                if(objetoMuchasSolicitudes.getPelicula().equals("salir") || objetoMuchasSolicitudes.getPelicula().equals("Salir") || objetoMuchasSolicitudes.getPelicula().equals("SALIR")  ){
+                    salir = true;
+                }
+                else{
+                    // realizamos la solicitud
+                    objetoMuchasSolicitudes.consumirEndpointResponse();
+                    System.out.println("objetoMuchasSolicitudes.getRespuestaAPIResponse()");
+                    System.out.println(objetoMuchasSolicitudes.getRespuestaAPIResponse());
+
+                    // procesamos el Json con la biblioteca Gson y el Record. Se implementa el metodo procesarJsonRecord para adaptar el retorno de la función a la clase TituloRecord
+                    TituloRecord objetoTituloRecordMuchas = objetoGsonMuchas.procesarJsonRecord(objetoMuchasSolicitudes.getRespuestaAPIResponse());
+                    System.out.println(" ObjetoTituloRecordMuchas");
+                    System.out.println(objetoTituloRecordMuchas);
+                    // Enviamos los elementos obtenidos con la biblioteca Gson y el record a un objeto tipo titulo, que tiene la funcionalidad que esperamos
+                    // de esta manera usamos el DTO. El objeto que ya tenemos y que siempre se utiliza -De la clase Titulo-, lo usamos para recibir datos extraidos con el record
+                    // Titulo es el objeto que hemos definido para presentar la información
+                    // esta porcion es la que podría lanzar una excepcion porque asigna a un objeto titulo lo que viene de tituloRecord
+                    Titulo objetoTituloGsonRecordMuchas = new Titulo(objetoTituloRecordMuchas);
+                    // guardamos en la lista el objeto procesado por la biblioteca GSON y procesados por el DTO
+                    titulos.add(objetoTituloGsonRecordMuchas);
+                }
+
+
+            }// fin while
+
+
+            mensajeAlmacenamientoJson=objetoArchivo.guardarJson( objetoGsonMuchas.convertirAJson(titulos));
+            System.out.println(mensajeAlmacenamientoJson);
+
+            // mostramos la lista de titulos
+            System.out.println("+++++++++++++ LISTA DE TITULOS OBTENIDA +++++++++++++ ");
+            System.out.println(titulos);
+            System.out.println("++++++++++ FIN PROCESAMIENTO MUCHOS TITULOS ++++++++++");
 
 
 
@@ -109,6 +173,5 @@ public class Main {
 
 
 
-
-    }
-}
+    }// fin main
+}// fin clase
